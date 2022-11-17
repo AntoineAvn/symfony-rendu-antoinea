@@ -20,7 +20,12 @@ class Controller extends AbstractController
     {
 
         $articleRegistery = $this->registery->getRepository(Article::class);
-        $articles = $articleRegistery->findAll();
+        $articles = $articleRegistery->findBy(
+            ['statut' => 1],
+            ['createdAt' => 'ASC'],
+            3,
+            null
+        );
         
         if (!$articles) {
             throw $this->createNotFoundException(

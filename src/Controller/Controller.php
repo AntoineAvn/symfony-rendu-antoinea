@@ -22,7 +22,7 @@ class Controller extends AbstractController
         $articleRegistery = $this->registery->getRepository(Article::class);
         $articles = $articleRegistery->findBy(
             ['statut' => 1],
-            ['createdAt' => 'ASC'],
+            ['createdAt' => 'DESC'],
             3,
             null
         );

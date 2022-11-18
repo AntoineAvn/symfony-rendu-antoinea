@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ArticleType extends AbstractType
 {
@@ -15,11 +16,11 @@ class ArticleType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('content')
-            ->add('createdAt')
-            ->add('statut')
             ->add('image')
-            ->add('user')
-        ;
+            ->add('statut', CheckboxType::class, [
+                'label'    => 'Pour publier cet article cochez la case (Sinon il sera enregistré dans vos brouillons) ?',
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

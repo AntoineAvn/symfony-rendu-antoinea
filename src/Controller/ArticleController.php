@@ -33,11 +33,18 @@ class ArticleController extends AbstractController
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): Response
     {
+        // Get user object of the user connected
+        $user = $this->getUser();
+
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Default field (dateTime, user who create the project)
+            $article->setCreatedAt(new \DateTime())->setUser($user);
+
             $articleRepository->save($article, true);
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);

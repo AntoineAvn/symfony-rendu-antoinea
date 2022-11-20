@@ -8,10 +8,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
                 <th>Title</th>
                 <td>{{ article.title }}</td>
             </tr>
@@ -27,10 +23,13 @@
                 <th>CreatedAt</th>
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+
+            {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
             <tr>
                 <th>Statut</th>
-                <td>{{ article.statut ? 'Yes' : 'No' }}</td>
+                <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Image</th>
                 <td>{{ article.image }}</td>
@@ -40,7 +39,8 @@
 
     <a href="{{ path('app_article_index') }}">back to list</a>
 
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-
-    {{ include('article/_delete_form.html.twig') }}
+    {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+        <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+        {{ include('article/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

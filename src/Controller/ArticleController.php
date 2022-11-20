@@ -5,16 +5,17 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/blog')]
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository,Request $request, PaginatorInterface $paginator): Response
     {
 
         $articles = $articleRepository->findBy(
@@ -22,6 +23,12 @@ class ArticleController extends AbstractController
             ['createdAt' => 'DESC'],
             null,
             null
+        );
+
+        $articles = $paginator->paginate(
+            $articles,
+            $request->query->getInt('page', 1),
+            5
         );
 
         return $this->render('article/index.html.twig', [

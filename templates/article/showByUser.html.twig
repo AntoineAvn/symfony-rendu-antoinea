@@ -36,7 +36,7 @@
                         {% endif %}
                     {% endif %}
                     
-                    <td>{{ article.image }}</td>
+                    <td><img src="{{ article.image }}" alt=""></td>
                     <td>
                         <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
                         {% if (app.user.id is defined)  %}

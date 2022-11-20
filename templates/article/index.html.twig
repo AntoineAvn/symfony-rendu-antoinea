@@ -32,7 +32,7 @@
                         <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
                     {% endif %}
                     
-                    <td>{{ article.image }}</td>
+                    <td><img src="{{ article.image }}"></td>
                     <td>
                         <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
                         {% if is_granted ('ROLE_ADMIN') %}

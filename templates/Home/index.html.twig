@@ -14,6 +14,7 @@
     {% for article in articles %}
         <div>
             <h2>{{ article.title }}</h2>
+            <img src=" {{ article.image }}">
             <p>{{ article.content|raw }}</p>
             {% if (app.user.id is defined)  %}
                     {% if app.user.id == article.user.id %}

@@ -38,6 +38,9 @@
 						{% endif %}
 						{% if (app.user) and (is_granted ('ROLE_ADMIN')) %}
 							<li class="nav-item">
+								<a class="nav-link text-warning" href="{{ path('app_user_index') }}">Admin</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="{{ path('app_user_index') }}">Utilisateurs</a>
 							</li>
 						{% endif %}
@@ -55,7 +58,10 @@
 									</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 										<li>
-											<a class="dropdown-item text-info" href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon profil</a>
+											<a class="dropdown-item text-info" href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon compte</a>
+										</li>
+										<li>
+											<a class="dropdown-item text-info" href="{{ path('app_article_showPrivateByUser', {'id': app.user.id}) }}">Mon profil</a>
 										</li>
 										<li>
 											<a class="dropdown-item text-info" href="{{ path('app_logout') }}">Se déconnecter</a>
@@ -63,7 +69,7 @@
 									</ul>
 								</li>
 							{% else %}
-								<a class="nav-link text-info" href="{{ path('app_login') }}">Mon compte</a>
+								<a class="nav-link text-info" href="{{ path('app_login') }}">Se connecter</a>
 							{% endif %}
 						</li>
 					</ul>

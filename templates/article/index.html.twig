@@ -26,7 +26,7 @@
                     <td><a href="{{ path('app_article_showPublicByUser', {'id': article.user.id}) }}">{{ article.user.firstname }} {{ article.user.lastname }}</a></td>
                     <td>{{ article.title }}</td>
                     <td>{{ article.description }}</td>
-                    <td>{{ article.content }}</td>
+                    <td>{{ article.content|raw }}</td>
                     <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     {% if is_granted ('ROLE_ADMIN') %}
                         <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>

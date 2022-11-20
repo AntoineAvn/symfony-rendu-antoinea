@@ -45,9 +45,10 @@
                     <td colspan="8">no records found</td>
                 </tr>    
         {% endfor %}
-        {{ knp_pagination_render(articles)}}
         </tbody>
     </table>
+
+    {{ knp_pagination_render(articles)}}
 
     <a href="{{ path('app_article_new') }}">Create new</a>
 {% endblock %}

@@ -15,11 +15,17 @@
         <div>
             <h2>{{ article.title }}</h2>
             <p>{{ article.content }}</p>
-            {% if app.user.id == article.user.id %}
-                <a href="{{ path('app_article_showPrivateByUser', {'id': article.user.id}) }}">Auteur: {{ article.user.firstname }} {{ article.user.lastname }}</a>
-            {% else %}
-                <a href="{{ path('app_article_showPublicByUser', {'id': article.user.id}) }}">Auteur: {{ article.user.firstname }} {{ article.user.lastname }}</a>
+            {% if (app.user.id is defined)  %}
+                    {% if app.user.id == article.user.id %}
+                        <a href="{{ path('app_article_showPrivateByUser', {'id': article.user.id}) }}">Auteur: {{ article.user.firstname }} {{ article.user.lastname }}</a>
+                    {% else %}
+                        <a href="{{ path('app_article_showPublicByUser', {'id': article.user.id}) }}">Auteur: {{ article.user.firstname }} {{ article.user.lastname }}</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('app_article_showPublicByUser', {'id': article.user.id}) }}">Auteur: {{ article.user.firstname }} {{ article.user.lastname }}</a>
             {% endif %}
+            
+            
             {# <p>{{ article.id }}</p> #}
             {# <a href="{{ path('article',{ 'id': article.id }) }}">Voir</a> #}
         </div>

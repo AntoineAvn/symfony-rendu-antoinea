@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <h1>Article index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Auteur</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                {% if (app.user.id == articles.0.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                    <th>Publié</th>
+                {% endif %}
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+                <tr>
+                    <td><a href="{{ path('app_article_showPublicByUser', {'id': article.user.id}) }}">{{ article.user.firstname }} {{ article.user.lastname }}</a></td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.description }}</td>
+                    <td>{{ article.content }}</td>
+                    <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                        <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
+                    {% endif %}
+                    
+                    <td>{{ article.image }}</td>
+                    <td>
+                        <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
+                        {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                            <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>    
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_article_new') }}">Create new</a>
+{% endblock %}

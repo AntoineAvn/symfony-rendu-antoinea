@@ -8,35 +8,42 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
+                <th>Auteur</th>
+                <th>Titre</th>
                 <th>Description</th>
-                <th>Content</th>
-                <th>CreatedAt</th>
-                <th>Statut</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                {% if is_granted ('ROLE_ADMIN') %}
+                    <th>Publié</th>
+                {% endif %}
                 <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.description }}</td>
-                <td>{{ article.content }}</td>
-                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.statut ? 'Yes' : 'No' }}</td>
-                <td>{{ article.image }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+                <tr>
+                    <td><a href="{{ path('app_article_showPublicByUser', {'id': article.user.id}) }}">{{ article.user.firstname }} {{ article.user.lastname }}</a></td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.description }}</td>
+                    <td>{{ article.content }}</td>
+                    <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    {% if is_granted ('ROLE_ADMIN') %}
+                        <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
+                    {% endif %}
+                    
+                    <td>{{ article.image }}</td>
+                    <td>
+                        <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
+                        {% if is_granted ('ROLE_ADMIN') %}
+                            <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>    
         {% endfor %}
         </tbody>
     </table>

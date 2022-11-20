@@ -8,7 +8,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Title</th>
+                <th>Titre</th>
                 <td>{{ article.title }}</td>
             </tr>
             <tr>
@@ -16,11 +16,11 @@
                 <td>{{ article.description }}</td>
             </tr>
             <tr>
-                <th>Content</th>
+                <th>Contenu</th>
                 <td>{{ article.content|raw }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
+                <th>Date</th>
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             {% if (app.user.id is defined)  %}
@@ -38,7 +38,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
+    <a href="{{ path('app_article_index') }}">Revenir à la liste</a>
 
     {% if (app.user.id is defined)  %}
         {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello Controller!{% endblock %}
+{% block title %}Acceuil{% endblock %}
 
 {% block body %}
 <style>
@@ -12,7 +12,7 @@
 
 <div class="example-wrapper">
     {% for article in articles %}
-        <div>
+        <div class="mt-5">
             <h2>{{ article.title }}</h2>
             <img src=" {{ article.image }}">
             <p>{{ article.content|raw }}</p>

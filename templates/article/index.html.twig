@@ -34,21 +34,24 @@
                     
                     <td><img src="{{ article.image }}"></td>
                     <td>
-                        <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
+                        <a href="{{ path('app_article_show', {'id': article.id}) }}">Voir</a>
                         {% if is_granted ('ROLE_ADMIN') %}
-                            <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                            <a href="{{ path('app_article_edit', {'id': article.id}) }}">Edit</a>
                         {% endif %}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="8">no records found</td>
+                    <td colspan="8">Pas d'articles trouvé</td>
                 </tr>    
         {% endfor %}
         </tbody>
     </table>
 
+    <div class="d-flex flex-column justify-content-center align-items-center">
+    <h5 class="text-info">Pagination</h5>
     {{ knp_pagination_render(articles)}}
+    </div>
 
-    <a href="{{ path('app_article_new') }}">Create new</a>
+    {# <a href="{{ path('app_article_new') }}">Create new</a> #}
 {% endblock %}

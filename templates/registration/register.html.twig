@@ -3,16 +3,29 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+
+<div class="mt-5 d-flex flex-column align-items-center">
+
+    <h1 class="mb-4">Enregistration</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
+        {{ form_row(registrationForm.firstname, {
+            label: 'Prénom'
+    }) }}
+    <br>
+        {{ form_row(registrationForm.lastname, {
+            label: 'Nom'
+    }) }}
+    <br>
         {{ form_row(registrationForm.email) }}
+        <br>
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">S'enregistrer</button>
     {{ form_end(registrationForm) }}
+
+</div>
+
 {% endblock %}

@@ -38,4 +38,12 @@ class Controller extends AbstractController
             'articles' => $articles
         ]);
     }
+
+
+    #[Route('/error', name: 'error')]
+    public function error(): Response
+    {
+
+        return $this->render('/security/error.html.twig');
+    }
 }

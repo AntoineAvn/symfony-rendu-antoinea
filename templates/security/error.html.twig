@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+<h3 class="text-danger d-flex justify-content-center mt-5">Vous n'avez pas le droit pour acceder à cette page</h3>
+
+    <a href="{{ path('home') }}" class="btn btn-lg btn-secondary d-flex justify-content-center mt-4">
+       Retour à l'acceuil
+    </a>
+{% endblock %}

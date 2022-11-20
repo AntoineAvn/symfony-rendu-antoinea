@@ -13,8 +13,10 @@
                 <th>Description</th>
                 <th>Contenu</th>
                 <th>Date</th>
-                {% if (app.user.id == articles.0.user.id) or (is_granted ('ROLE_ADMIN')) %}
-                    <th>Publié</th>
+                {% if (app.user.id is defined)  %}
+                    {% if (app.user.id == articles.0.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                        <th>Publié</th>
+                    {% endif %}
                 {% endif %}
                 <th>Image</th>
                 <th>actions</th>
@@ -28,15 +30,19 @@
                     <td>{{ article.description }}</td>
                     <td>{{ article.content|raw }}</td>
                     <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
-                        <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
+                    {% if (app.user.id is defined)  %}
+                        {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                            <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
+                        {% endif %}
                     {% endif %}
                     
                     <td>{{ article.image }}</td>
                     <td>
                         <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                        {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
-                            <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                        {% if (app.user.id is defined)  %}
+                            {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                                <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>

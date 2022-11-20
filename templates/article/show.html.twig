@@ -23,12 +23,13 @@
                 <th>CreatedAt</th>
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-
-            {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
-            <tr>
-                <th>Statut</th>
-                <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
-            </tr>
+            {% if (app.user.id is defined)  %}
+                {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+                <tr>
+                    <th>Statut</th>
+                    <td>{{ article.statut ? 'Publié' : 'Brouillon' }}</td>
+                </tr>
+                {% endif %}
             {% endif %}
             <tr>
                 <th>Image</th>
@@ -39,8 +40,10 @@
 
     <a href="{{ path('app_article_index') }}">back to list</a>
 
-    {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
-        <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-        {{ include('article/_delete_form.html.twig') }}
+    {% if (app.user.id is defined)  %}
+        {% if (app.user.id == article.user.id) or (is_granted ('ROLE_ADMIN')) %}
+            <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+            {{ include('article/_delete_form.html.twig') }}
+        {% endif %}
     {% endif %}
 {% endblock %}

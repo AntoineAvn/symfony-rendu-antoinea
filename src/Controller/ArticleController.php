@@ -17,7 +17,6 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository): Response
     {
 
-        // $articleRegistery = $this->registery->getRepository(Article::class);
         $articles = $articleRepository->findBy(
             ['statut' => 1],
             ['createdAt' => 'DESC'],
@@ -26,6 +25,40 @@ class ArticleController extends AbstractController
         );
 
         return $this->render('article/index.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+    #[Route('/profil/public/{id}', name: 'app_article_showPublicByUser', methods: ['GET'])]
+    public function showPublicByUser(ArticleRepository $articleRepository, $id): Response
+    {
+
+        //Get articles by user_id && when statut is Published (=1)
+        $articles = $articleRepository->findBy(
+            array('user' => $id, 'statut' => 1),
+            ['createdAt' => 'DESC'],
+            null,
+            null
+        );
+
+        return $this->render('article/showByUser.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+    #[Route('/profil/private/{id}', name: 'app_article_showPrivateByUser', methods: ['GET'])]
+    public function showPrivateByUser(ArticleRepository $articleRepository, $id): Response
+    {
+
+        //Get articles by user_id
+        $articles = $articleRepository->findBy(
+            ['user' => $id],
+            ['createdAt' => 'DESC'],
+            null,
+            null
+        );
+
+        return $this->render('article/showByUser.html.twig', [
             'articles' => $articles,
         ]);
     }
@@ -82,13 +115,13 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
-    public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    #[Route('/{id}/{user_id}', name: 'app_article_delete', methods: ['POST'])]
+    public function delete(Request $request, Article $article, ArticleRepository $articleRepository, $user_id): Response
     {
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
             $articleRepository->remove($article, true);
         }
 
-        return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_article_showPrivateByUser', ['id' => $user_id], Response::HTTP_SEE_OTHER);
     }
 }
